@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sobre a lista de transacoes O componente exibido corresponde ao seu snapshot 1`] = `
+<div
+  data-testid="transacoes"
+/>
+`;
