@@ -1,22 +1,36 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import App, { calcularNovoSaldo } from './App'
+import ReactTestUtils, { act } from 'react-dom/test-utils';
 
 describe('componente principal', () => {
     describe('Quando eu abro o app do banco', () => {
         it('o nome é exibido', () => {
-            render(<App />);
-            expect(screen.getByText('ByteBank')).toBeInTheDocument();
+            act(() => {
+                const { getByText } = render(<App />);
+
+                expect(screen.getByText('ByteBank')).toBeInTheDocument();
+            })
+
         })
 
         it('o saldo é exibido', () => {
-            render(<App />);
-            expect(screen.getByText('Saldo:')).toBeInTheDocument();
+            act(() => {
+                const { getByText } = render(<App />);
+
+                expect(screen.getByText('Saldo:')).toBeInTheDocument();
+            })
+
         })
 
         it('o botao de Realizar operação é exibido', () => {
-            render(<App />);
-            expect(screen.getByText('Realizar operação')).toBeInTheDocument();
+            act(() => {
+                const { getByText } = render(<App />);
+
+                expect(screen.getByText('Realizar operação')).toBeInTheDocument();
+            })
+
+
         })
     })
 
@@ -43,6 +57,8 @@ describe('componente principal', () => {
             expect(novoSaldo).toBe(150);
         })
         it('que é um saque , a transacao deve ser realizada', () => {
+
+
             const { getByText, getByLabelText, getByTestId } = render(<App />);
 
             const saldo = getByText("R$ 1000")
@@ -50,8 +66,31 @@ describe('componente principal', () => {
             const valor = getByTestId('valor');
             const botaoTransacao = getByText('Realizar operação');
 
-            expect(saldo.textContent).toBe('R$ 1000')
+            expect(saldo.textContent).toBe('R$ 1000');
 
+            fireEvent.click(transacao, { target: { value: 'saque' } });
+            fireEvent.change(valor, { target: { value: 10 } });
+            fireEvent.click(botaoTransacao);
+
+            expect(saldo.textContent).toBe('R$ 990');
+        })
+        it('que é um depósito , a transacao deve ser realizada', () => {
+
+
+            const { getByText, getByLabelText, getByTestId } = render(<App />);
+
+            const saldo = getByText("R$ 1000")
+            const transacao = getByLabelText('Depósito');
+            const valor = getByTestId('valor');
+            const botaoTransacao = getByText('Realizar operação');
+
+            expect(saldo.textContent).toBe('R$ 1000');
+
+            fireEvent.click(transacao, { target: { value: 'deposito' } });
+            fireEvent.change(valor, { target: { value: 10 } });
+            fireEvent.click(botaoTransacao);
+
+            expect(saldo.textContent).toBe('R$ 1010');
         })
     })
 })

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Conta.css'
+import ValidarCampos from './validarCampos'
 
 const Conta = ({ saldo, realizarTransacao }) => {
     const [valores, atualizarValores] = useState({ transacao: '', valor: 0 });
@@ -14,8 +15,15 @@ const Conta = ({ saldo, realizarTransacao }) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const dataTransacao = new Date().toLocaleDateString('pt-br');
-        realizarTransacao({ ...valores, data: dataTransacao });
+        let ehValido = ValidarCampos(saldo, valores);
+
+        if (!ehValido) {
+            console.log('Nao foi possivel realizar a transacao');
+        } else {
+            const dataTransacao = new Date().toLocaleDateString('pt-br');
+            realizarTransacao({ ...valores, data: dataTransacao });
+        }
+
     }
 
     return <div className="Conta-header">
