@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`O componente de saldo  O snapshot do componente deve permanecer sempre o mesmo 1`] = `
+exports[`O componente de Conta  O snapshot do componente deve permanecer sempre o mesmo 1`] = `
 <div
   class="Conta-header"
 >

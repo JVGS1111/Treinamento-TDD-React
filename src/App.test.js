@@ -7,7 +7,7 @@ describe('componente principal', () => {
     describe('Quando eu abro o app do banco', () => {
         it('o nome é exibido', () => {
             act(() => {
-                const { getByText } = render(<App />);
+                render(<App />);
 
                 expect(screen.getByText('ByteBank')).toBeInTheDocument();
             })
@@ -16,7 +16,7 @@ describe('componente principal', () => {
 
         it('o saldo é exibido', () => {
             act(() => {
-                const { getByText } = render(<App />);
+                render(<App />);
 
                 expect(screen.getByText('Saldo:')).toBeInTheDocument();
             })
@@ -25,7 +25,7 @@ describe('componente principal', () => {
 
         it('o botao de Realizar operação é exibido', () => {
             act(() => {
-                const { getByText } = render(<App />);
+                render(<App />);
 
                 expect(screen.getByText('Realizar operação')).toBeInTheDocument();
             })
@@ -58,13 +58,12 @@ describe('componente principal', () => {
         })
         it('que é um saque , a transacao deve ser realizada', () => {
 
+            render(<App />);
 
-            const { getByText, getByLabelText, getByTestId } = render(<App />);
-
-            const saldo = getByText("R$ 1000")
-            const transacao = getByLabelText('Saque');
-            const valor = getByTestId('valor');
-            const botaoTransacao = getByText('Realizar operação');
+            const saldo = screen.getByText("R$ 1000")
+            const transacao = screen.getByLabelText('Saque');
+            const valor = screen.getByTestId('valor');
+            const botaoTransacao = screen.getByText('Realizar operação');
 
             expect(saldo.textContent).toBe('R$ 1000');
 
@@ -77,12 +76,12 @@ describe('componente principal', () => {
         it('que é um depósito , a transacao deve ser realizada', () => {
 
 
-            const { getByText, getByLabelText, getByTestId } = render(<App />);
+            render(<App />);
 
-            const saldo = getByText("R$ 1000")
-            const transacao = getByLabelText('Depósito');
-            const valor = getByTestId('valor');
-            const botaoTransacao = getByText('Realizar operação');
+            const saldo = screen.getByText("R$ 1000")
+            const transacao = screen.getByLabelText('Depósito');
+            const valor = screen.getByTestId('valor');
+            const botaoTransacao = screen.getByText('Realizar operação');
 
             expect(saldo.textContent).toBe('R$ 1000');
 
